@@ -1,0 +1,35 @@
+plan of attack:
+*get good 10 cell figures
+*use git for version control
+*fix parallel (try using old spike pair calculations)
+*start collecting s
+*plot inhib conductance vs gj conductance vs firing rate, spike pairs
+	*inhib conductance = 0 to 3x highest gj conductance, in same steps as gj
+*plot inhib conductance vs shared input vs firing rate, spike pairs
+	*gj conductance = whatever it is with correlated input tests
+*look upon actual voltage traces for the above two, find patterns
+	*where are the spike pairs going?
+*run fft on sum of s values from all cells
+	*we want to find relationship between inhibition and gamma. 
+	*does inhibition decrease it? increase it?
+	*what about input correlation, does that increase rhythmicity?
+*think about why dendrites and soma are different
+*papers to read: gamma, ermentrout-kopell
+	
+
+gap junctions are a decider/discretizer - turn hints of correlation into yes/no
+this may be dependent on gamma, which beta can wash out
+
+range-kutta?
+why are dendrites and soma different? is it just strength? (if so can we just use soma?)
+	how to test: get data for synapses onto soma. see what happens when you 		scale term down
+gap junctions = ping rhythms?? inhibitory connection # = gj connectivity? (see if anyone has looked at spike pairs in ping)
+	how to test: make a ping network
+is rhythmic input more effective at rescuing firing rate? (optimal frequency)
+	how to test: design rhythmic input traces at various frequencies
+what effect does it have on output?
+	how to test: need a bigger network... difficult
+
+server time for parallel version: 564 sec. 2543 if calculating spike pairs ben's way
+laptop, non-parallel: 1709 sec
+server, non-parallel: 2545 sec
