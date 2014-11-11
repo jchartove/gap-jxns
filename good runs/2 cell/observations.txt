@@ -1,0 +1,12 @@
+adding inhibition to gap junctions makes highest firing rate (low conductance gj) higher and lowest firing rate (low conductance gj) lower. scales with inhibition size
+increasing inhibitory conductance alone (no gap junctions) doesn't change much - might make firing rate a little lower?
+if that's true, increasing inhibitory conductance with no gap junctions also decreases spike pair proportion a little (seems to correlate strongly with firing rate in this condition)
+inhibitory synapses alone make firing rate lower than no synapses (duh) but don't really do much in response to shared input
+in response to shared input, inhibitory synapse condition is same as no synapse condition. spike pairs go up quadratically from 5% to 100% as correlation in input increases to 100%
+
+small inhib strength = 0.0187
+large inhib strength = 0.2618
+
+adding small inhibitory synapses to gap junctions increases the proportion of spike pairs but adding large ones decreases it
+adding large inhibition maybe increases firing rate for 100% shared input, adding small inhibition maybe decreases it
+adding large inhibitory synapse to gap junctions decreases initial spike pairs (no correlation in input) from 25% to 10%. adding small inhibitory synapse increases it to 35%. spike pairs still hit ceiling linearly as correlation increases though
