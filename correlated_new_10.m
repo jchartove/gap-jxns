@@ -26,7 +26,7 @@ e_size = 0.0053;  %changes magnitude of input. 0.0053 gets you between 5 and 2 H
 no_i_inputs = 93*no_cells; % = 93 times 10
 i_size = 0.0053;
 
-gj_strength = (5*(no_cells-1)*e_size)/sqrt(no_cells); %magnitude of steps of strength of gap junction
+gj_strength = (70*e_size)/sqrt(no_cells); %magnitude of steps of strength of gap junction
 inhib_strength = (5*i_size)/sqrt(no_cells);
 
 tau_i1 = 1; tau_ir = 0.5; tau_id = 5; tau_i = 10; tau_r = 1;
@@ -149,8 +149,6 @@ for j = 1:max_j
 		CG(logical(eye(size(CG)))) = 0;
 	
 		CS = inhib_strength*(rand(no_cells) < p_inhib);
-		CS = triu(CS);
-		CS = CS + CS.';
 		CS(logical(eye(size(CS)))) = 0;
 	
 		[Vs,Vd,s,m,h,n,t] = ing_w_dendritic_gap_jxn(no_cells, epsps-ipsps, T0, [], CS, CG);
@@ -192,7 +190,9 @@ end
 
 spike_pairs = spike_pairs./(2*firing_rate*(T0/1000)); %element-wise
 pair_avg = sum(spike_pairs,2)/max_j
-save('10corr.mat','','-v7');
+
+save('10corrsmalldata.mat','-v7')
+save('10corrbigdata.mat','Vs_traces','Vd_traces','s_traces','-v7.3')
 
 intervals = (0:(1/(max_k-1)):1);
 figure

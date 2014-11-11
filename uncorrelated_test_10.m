@@ -93,8 +93,6 @@ for j = 1:max_j
 	CG(logical(eye(size(CG)))) = 0;
 	
 	CS = inhib_strength*(rand(no_cells) < p_inhib);
-	CS = triu(CS);
-	CS = CS + CS.';
 	CS(logical(eye(size(CS)))) = 0;
 	
     for k = 1:max_k	
@@ -134,8 +132,9 @@ for j = 1:max_j
 end
 spike_pairs = spike_pairs./(2*firing_rate*(T0/1000)); %element-wise
 pair_avg = sum(spike_pairs,2)/max_j
-dumvar=0; 
-save('10uncorr.mat','dumvar','-v7');
+
+save('10uncorrsmalldata.mat','-v7')
+save('10uncorrbigdata.mat','Vs_traces','Vd_traces','s_traces','-v7.3')
 
 gj_intervals = (0:gj_strength:(max_k-1)*gj_strength);
 figure

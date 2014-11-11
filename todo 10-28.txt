@@ -1,5 +1,4 @@
 plan of attack:
-*get good 10 cell figures
 *use git for version control
 *fix parallel (try using old spike pair calculations)
 *start collecting s
@@ -33,3 +32,6 @@ what effect does it have on output?
 server time for parallel version: 564 sec. 2543 if calculating spike pairs ben's way
 laptop, non-parallel: 1709 sec
 server, non-parallel: 2545 sec
+
+save('10corrbigdata.mat','Vs_traces','Vd_traces','s_traces','-v7.3')
+save('10corrsmalldata.mat','-v7')

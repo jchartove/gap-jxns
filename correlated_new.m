@@ -10,7 +10,7 @@
 	%how to test: need a bigger network... difficult
 
 clear;
-T0 = 10000;  %3000 millisecond long trial
+T0 = 5000;  %3000 millisecond long trial
 dt = .005; %this is in milliseconds
 T = floor(T0/dt);
 t = (1:T)*dt;
@@ -26,14 +26,14 @@ e_size = 0.0053;  %changes magnitude of input. 0.0053 gets you between 5 and 2 H
 no_i_inputs = 93*no_cells; % = 93 times 10
 i_size = 0.0053;
 
-gj_strength = (5*(no_cells-1)*e_size)/sqrt(no_cells); %magnitude of steps of strength of gap junction
+gj_strength = (70*e_size)/sqrt(no_cells); %magnitude of steps of strength of gap junction
 inhib_strength = (5*i_size)/sqrt(no_cells);
 
 tau_i1 = 1; tau_ir = 0.5; tau_id = 5; tau_i = 10; tau_r = 1;
 tau_e1 = 1; tau_er = 0.5; tau_ed = 2;
 delta_t = 5; %number of milliseconds between two spikes to consider them "synchronous"
 
-max_j = 10; %number of trials to run
+max_j = 5; %number of trials to run
 max_k = 10; %number of correlation values to use
 
 gap_conductance = (70*e_size/sqrt(no_cells));
@@ -149,8 +149,6 @@ for j = 1:max_j
 		CG(logical(eye(size(CG)))) = 0;
 	
 		CS = inhib_strength*(rand(no_cells) < p_inhib);
-		CS = triu(CS);
-		CS = CS + CS.';
 		CS(logical(eye(size(CS)))) = 0;
 	
 		[Vs,Vd,s,m,h,n,t] = ing_w_dendritic_gap_jxn(no_cells, epsps-ipsps, T0, [], CS, CG);
@@ -190,8 +188,11 @@ end
  %spike_pairs = spike_pairs./(2*firing_rate);
  %pair_avg = sum(spike_pairs,2)/max_j
 
- spike_pairs = spike_pairs./(2*firing_rate*(T0/1000)); %element-wise
+spike_pairs = spike_pairs./(2*firing_rate*(T0/1000)); %element-wise
 pair_avg = sum(spike_pairs,2)/max_j
+
+save('10corrsmalldata.mat','-v7')
+save('10corrbigdata.mat','Vs_traces','Vd_traces','s_traces','-v7.3')
 
 intervals = (0:(1/(max_k-1)):1);
 figure
@@ -200,6 +201,8 @@ str = ['Average firing rate, ',num2str(no_cells), ' cells, correlated input, ' n
 title(str)
 xlabel('Fraction of input shared')
 ylabel('Firing rate (Hz)')
+savefig('10_corr_fr.fig')
+
 
 figure
 plot(intervals,pair_avg)
@@ -207,6 +210,7 @@ str = ['Spike pairs, ',num2str(no_cells), ' cells, correlated input, ' num2str(m
 title(str)
 xlabel('Fraction of input shared')
 ylabel('Proportion of paired spikes')
+savefig('10_corr_pairs.fig')
  
 %for i = 1:5
 %    for j = 1:10

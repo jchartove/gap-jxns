@@ -5,7 +5,7 @@
 %send ben figures not data
 
 %changes: longer trial, changed gj strength (stronger) by changing normalization, only looking at connected cells, changing spike pair counting
-tic
+
 clear;
 T0 = 5000;  %3000 millisecond long trial
 dt = .005; %this is in milliseconds
@@ -93,8 +93,6 @@ for j = 1:max_j
 	CG(logical(eye(size(CG)))) = 0;
 	
 	CS = inhib_strength*(rand(no_cells) < p_inhib);
-	CS = triu(CS);
-	CS = CS + CS.';
 	CS(logical(eye(size(CS)))) = 0;
 	
     for k = 1:max_k	
@@ -134,7 +132,9 @@ for j = 1:max_j
 end
 spike_pairs = spike_pairs./(2*firing_rate*(T0/1000)); %element-wise
 pair_avg = sum(spike_pairs,2)/max_j
-toc
+
+save('10uncorrsmalldata.mat','-v7')
+save('10uncorrbigdata.mat','Vs_traces','Vd_traces','s_traces','-v7.3')
 
 gj_intervals = (0:gj_strength:(max_k-1)*gj_strength);
 figure
@@ -143,6 +143,7 @@ str = ['Average firing rate, ',num2str(no_cells), ' cells, uncorrelated input, '
 title(str)
 xlabel('Gap junction conductance')
 ylabel('Firing rate (Hz)')
+savefig('10_uncorr_fr.fig')
 
 figure
 plot(gj_intervals,pair_avg)
@@ -150,3 +151,4 @@ str = ['Spike pairs, ',num2str(no_cells), ' cells, uncorrelated input, ' num2str
 title(str)
 xlabel('Gap junction conductance')
 ylabel('Proportion of paired spikes')
+savefig('10_uncorr_pairs.fig')
