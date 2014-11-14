@@ -1,14 +1,3 @@
-%shared pool of spikes (did i do it rite)
-%gap junctions = ping rhythms?? inhibitory connection # = gj connectivity? (see if anyone has looked at spike pairs in ping)
-	%how to test: make a ping network
-	%also, see what happens when there are inhibitory synapses and no gj
-%if there are inhibitory synapses, do we get gamma?
-	%how to test: fourier transform of output (need to save the voltage traces for this)
-%is rhythmic input more effective at rescuing firing rate? (optimal frequency)
-	%how to test: design rhythmic input traces at various frequencies
-%what effect does it have on output?
-	%how to test: need a bigger network... difficult
-
 clear;
 T0 = 5000;  %3000 millisecond long trial
 dt = .005; %this is in milliseconds
@@ -16,7 +5,7 @@ T = floor(T0/dt);
 t = (1:T)*dt;
 no_cells = 2;
 p_gj = 1; %probability of gap junction between any pair of cells. should be 1 if you're using 2 cells
-p_inhib = 0; %probability of inhibitory connection between any pair of cells
+p_inhib = 1; %probability of inhibitory connection between any pair of cells
 
 no_e_inputs = 127*no_cells; %127 = number of AMPA input synapses per cell in Hjorth et al, times 10 cells
 e_size = 0.0053;  %changes magnitude of input. 0.0053 gets you between 5 and 2 Hz firing rate.
@@ -26,8 +15,7 @@ e_size = 0.0053;  %changes magnitude of input. 0.0053 gets you between 5 and 2 H
 no_i_inputs = 93*no_cells; % = 93 times 10
 i_size = 0.0053;
 
-gj_strength = (90*e_size)/sqrt(no_cells); %magnitude of steps of strength of gap junction
-inhib_strength = (5*i_size)/sqrt(no_cells);
+inhib_strength = (5*i_size)/sqrt(no_cells); %change 5 to 70 for large
 
 tau_i1 = 1; tau_ir = 0.5; tau_id = 5; tau_i = 10; tau_r = 1;
 tau_e1 = 1; tau_er = 0.5; tau_ed = 2;
@@ -62,7 +50,6 @@ rect = [zeros(1,length(rect)) rect];
 
 Vs_traces = zeros(max_j, max_k,no_cells,T);
 Vd_traces = zeros(max_j, max_k,no_cells,T);
-s_traces = zeros(max_k,no_cells,T);
 
 for j = 1:max_j
     
@@ -138,23 +125,13 @@ for j = 1:max_j
 		for i = 1:no_cells, epsps(i, :) = [shared_e_input(1,:) + epsps(i,:)]; end
         for i = 1:no_cells, ipsps(i, :) = [shared_i_input(1,:) + ipsps(i,:)]; end
     
-		%CG = gap_conductance*(rand(no_cells) < p_gj);
-		%CG(logical(eye(size(CG)))) = 0;
-		%CS = inhib_strength*(rand(no_cells) < p_inhib);
-		%CS(logical(eye(size(CS)))) = 0;
-		
-		CG = gj_strength*(rand(no_cells) < p_gj);
-		CG = triu(CG);
-		CG = CG + CG.';
+		CG = gap_conductance*(rand(no_cells) < p_gj);
 		CG(logical(eye(size(CG)))) = 0;
-	
 		CS = inhib_strength*(rand(no_cells) < p_inhib);
 		CS(logical(eye(size(CS)))) = 0;
-	
 		[Vs,Vd,s,m,h,n,t] = ing_w_dendritic_gap_jxn(no_cells, epsps-ipsps, T0, [], CS, CG);
 		Vs_traces(j,k,:,:) = Vs;
         Vd_traces(j,k,:,:) = Vd;
-		s_traces(k,:,:) = s;
 		firing_rate(k,j) = 0;
 
 		for a = 1:no_cells
@@ -173,7 +150,7 @@ for j = 1:max_j
 		spike_pairs(k,j) = 0;
 		for b = 1:no_cells
 			for c = 1:no_cells
-				if CG(b,c) > 0 && b ~= c 
+				if b ~= c %&& CS(b,c) > 0
 					wide_sum = wide_spikes(b,:) + wide_spikes(c,:);
 					foo = wide_sum > 5;
 					wide_synch = diff(foo, [], 2);
@@ -188,11 +165,8 @@ end
  %spike_pairs = spike_pairs./(2*firing_rate);
  %pair_avg = sum(spike_pairs,2)/max_j
 
-spike_pairs = spike_pairs./(2*firing_rate*(T0/1000)); %element-wise
+spike_pairs = spike_pairs./(firing_rate*(T0/1000)); %element-wise
 pair_avg = sum(spike_pairs,2)/max_j
-
-save('10corrsmalldata.mat','-v7')
-save('10corrbigdata.mat','Vs_traces','Vd_traces','s_traces','-v7.3')
 
 intervals = (0:(1/(max_k-1)):1);
 figure
@@ -201,8 +175,6 @@ str = ['Average firing rate, ',num2str(no_cells), ' cells, correlated input, ' n
 title(str)
 xlabel('Fraction of input shared')
 ylabel('Firing rate (Hz)')
-savefig('10_corr_fr.fig')
-
 
 figure
 plot(intervals,pair_avg)
@@ -210,7 +182,6 @@ str = ['Spike pairs, ',num2str(no_cells), ' cells, correlated input, ' num2str(m
 title(str)
 xlabel('Fraction of input shared')
 ylabel('Proportion of paired spikes')
-savefig('10_corr_pairs.fig')
  
 %for i = 1:5
 %    for j = 1:10

@@ -1,4 +1,4 @@
-function [mean_pop_firing_rate, mean_pop_norm_spike_pairs, Vs_traces, Vd_traces, s_traces] = gj_corr_input(T0,no_cells,p_gj,max_j,p_inhib,inhib_strength)
+function [mean_pop_firing_rate, mean_pop_norm_spike_pairs] = gj_corr_input_small(T0,no_cells,p_gj,max_j,p_inhib,inhib_strength,gj_strength)
 tic
 
 dt = .005; %this is in milliseconds
@@ -11,7 +11,9 @@ e_size = 0.0053; %changes magnitude of input. 0.0053 gets you between 5 and 2 Hz
 %you stop getting firing rate decreases as conductance increases for 10 cells around 0.015. 
 %at around 0.5 you can get increased spike pairs with increased conductance in 10 cell networks, but firing rate is deeply weird
 
-gj_strength = (70*e_size)/sqrt(no_cells); %magnitude of steps of strength of gap junction
+if nargin < 7
+    gj_strength = (70*e_size)/sqrt(no_cells); %magnitude of steps of strength of gap junction
+end
 
 no_i_inputs = 93*no_cells; % = 93 times 10
 i_rate = 2;
@@ -50,16 +52,12 @@ rect = [zeros(1,length(rect)) rect];
 firing_rate = zeros(no_cells, max_k, max_j);
 spike_pairs = zeros(max_k, max_j);
 
-Vs_traces = zeros(max_j, max_k ,no_cells,T);
-Vd_traces = zeros(max_j, max_k, no_cells,T);
-s_traces = zeros(max_j, max_k, no_cells,T);
-
 params = struct('dt', dt, 't', t, 'T', T, 'no_e_inputs', no_e_inputs, 'e_rate', e_rate, 'e_size', e_size, 'gj_strength', gj_strength, 'no_i_inputs', no_i_inputs, 'i_rate', i_rate, 'i_size', i_size, 'CE_e', CE_e, 'CE_i', CE_i, 'max_k', max_k, 'epsp', epsp, 'ipsp', ipsp, 'T0', T0, 'no_cells', no_cells, 'p_gj', p_gj, 'rect', rect, 'p_inhib', p_inhib, 'inhib_strength', inhib_strength);
 
 
 parfor j = 1:max_j
 	j
-    [firing_rate(:,:,j), spike_pairs(:,j), Vs_traces(j,:,:,:), Vd_traces(j,:,:,:), s_traces(j,:,:,:)] = trial(params);
+    [firing_rate(:,:,j), spike_pairs(:,j)] = trial(params);
 end
 
 pop_firing_rate = reshape(sum(firing_rate), max_k, max_j)*(1000/(T0*no_cells));
@@ -69,49 +67,22 @@ spike_pairs = spike_pairs./(2*pop_firing_rate*(T0/1000)); %element-wise
 mean_pop_norm_spike_pairs = sum(spike_pairs,2)/max_j
 
 toc
-
-save('10corrsmalldata.mat','','-v7')
-save('10corrbigdata.mat','Vs_traces','Vd_traces','s_traces','-v7.3')
-
-intervals = (0:(1/(max_k-1)):1);
-figure
-plot(intervals,mean_pop_firing_rate)
-str = ['Average firing rate, ',num2str(no_cells), ' cells, correlated input, ' num2str(max_j), ' trials'];
-title(str)
-xlabel('Fraction of input shared')
-ylabel('Firing rate (Hz)')
-savefig('10_corr_fr.fig')
-
-
-figure
-plot(intervals,mean_pop_norm_spike_pairs)
-str = ['Spike pairs, ',num2str(no_cells), ' cells, correlated input, ' num2str(max_j), ' trials'];
-title(str)
-xlabel('Fraction of input shared')
-ylabel('Proportion of paired spikes')
-savefig('10_corr_pairs.fig')
 end
 
-function [firing_rate_jslice, norm_spike_pairs_jslice, Vs_traces_jslice, Vd_traces_jslice, s_traces_jslice] = trial(params)
+function [firing_rate_jslice, norm_spike_pairs_jslice] = trial(params)
 	firing_rate_jslice = zeros(params.no_cells, params.max_k, 1);
 	norm_spike_pairs_jslice = zeros(params.max_k, 1);
-	Vs_traces_jslice = zeros(1, params.max_k, params.no_cells, params.T);
-	Vd_traces_jslice = zeros(1, params.max_k, params.no_cells, params.T);
-    s_traces_jslice = zeros(1, params.max_k, params.no_cells, params.T);
     
     parfor k = 1:params.max_k
 		k
-		[firing_rate_jslice(:,k,1), norm_spike_pairs_jslice(k,1), Vs_traces_jslice(1,k,:,:), Vd_traces_jslice(1,k,:,:), s_traces_jslice(1,k,:,:)] = gj_value(params, k);
+		[firing_rate_jslice(:,k,1), norm_spike_pairs_jslice(k,1)] = gj_value(params, k);
     end
 end
 
-function [firing_rate_kslice, spike_pairs_kslice, Vs_traces_kslice, Vd_traces_kslice, s_traces_kslice] = gj_value(params, k)
+function [firing_rate_kslice, spike_pairs_kslice] = gj_value(params, k)
 
 	firing_rate_kslice = zeros(params.no_cells, 1, 1);
 	spike_pairs_kslice = zeros(1,1);
-	Vs_traces_kslice = zeros(1, 1, params.no_cells, params.T);
-	Vd_traces_kslice = zeros(1, 1, params.no_cells, params.T);
-    s_traces_kslice = zeros(1, 1, params.no_cells, params.T);
 
     spike_indicator = zeros(params.no_cells,(params.T0/params.dt)-1);
 	synch_indicator = zeros(params.no_cells, params.no_cells, (params.T0/params.dt)-2);
@@ -193,8 +164,7 @@ function [firing_rate_kslice, spike_pairs_kslice, Vs_traces_kslice, Vd_traces_ks
     CS = params.inhib_strength*(rand(params.no_cells) < params.p_inhib);
     CS(logical(eye(size(CS)))) = 0;
 
-    [Vs,Vd_traces_kslice(1,1,:,:),s_traces_kslice(1,1,:,:),~,~,~,~] = ing_w_dendritic_gap_jxn(params.no_cells, epsps-ipsps, params.T0, [], CS, (k-1)*CG);
-	Vs_traces_kslice(1,1,:,:) = Vs;
+    [Vs,~,~,~,~,~,~] = ing_w_dendritic_gap_jxn(params.no_cells, epsps-ipsps, params.T0, [], CS, (k-1)*CG);
 	
 	for a = 1:params.no_cells
         Vs_pos = Vs > 0;

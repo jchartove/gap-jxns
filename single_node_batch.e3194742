@@ -1,0 +1,6 @@
+{Undefined function 'savefig' for input arguments of type 'char'.
+
+Error in inhib_gj (line 25)
+savefig('inhib_gj_fr.fig')
+} 
+
