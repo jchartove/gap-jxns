@@ -1,8 +1,5 @@
 plan of attack:
-*clear the big variables
-*no nested parallel for loops
-*finish inhib tests
-*start collecting s
+*figure out what to do with s
 *look upon actual voltage traces for the inhibitory tests, find patterns
 	*where are the spike pairs going?
 *run fft on sum of s values from all cells
@@ -11,14 +8,14 @@ plan of attack:
 	*what about input correlation, does that increase rhythmicity?
 *think about why dendrites and soma are different
 *papers to read: gamma, ermentrout-kopell
-	
+
 
 gap junctions are a decider/discretizer - turn hints of correlation into yes/no
 this may be dependent on gamma, which beta can wash out
 
 range-kutta?
 why are dendrites and soma different? is it just strength? (if so can we just use soma?)
-	how to test: get data for synapses onto soma. see what happens when you 		scale term down
+	how to test: get data for synapses onto soma. see what happens when you scale term down
 gap junctions = ping rhythms?? inhibitory connection # = gj connectivity? (see if anyone has looked at spike pairs in ping)
 	how to test: make a ping network
 is rhythmic input more effective at rescuing firing rate? (optimal frequency)
@@ -28,7 +25,16 @@ what effect does it have on output?
 
 useful commands:
 qdel [job id]
-qsub -pe omp 12 single_node_batch "matlabpool open, inhib_gj(5000,2,1,5,1)" inhib_gj_out_11_12
+qsub -pe omp 12 single_node_batch "matlabpool open, inhib_tests(5000,2,1,5,1), matlabpool close, exit" 2_inhib_tests_out_11_16
+qsub -pe omp 12 single_node_batch "matlabpool open, gj_shared(5000,2,1,5,0), matlabpool close, exit" 2_gj_shared_noinhib_11_16
+qsub -pe omp 12 single_node_batch "matlabpool open, inhib_shared(5000,2,0,5,1), matlabpool close, exit" 2_inhib_shared_nogj_11_16
+
+qsub -pe omp 12 single_node_batch "matlabpool open, inhib_gj(5000,10,0.33,5,0.33), matlabpool close, exit" 10_inhib_gj_out_11_16
+qsub -pe omp 12 single_node_batch "matlabpool open, inhib_shared(5000,10,0.33,5,0.33), matlabpool close, exit" 10_inhib_shared_out_11_16
+qsub -pe omp 12 single_node_batch "matlabpool open, gj_shared(5000,10,0.33,5,0.33), matlabpool close, exit" 10_gj_shared_out_11_16
+
+qsub -pe omp 12 single_node_batch "matlabpool open, inhib_periodic(5000,2,1,10,1,1), matlabpool close, exit" 2_periodic_tests_out_11_14
+
 qsub -pe omp 12 run_inhib_gj.sh
 qstat -u chartove
 ls -l -t -r
