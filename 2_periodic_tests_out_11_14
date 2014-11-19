@@ -1,0 +1,1044 @@
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2013 The MathWorks, Inc.
+                    R2013a (8.1.0.604) 64-bit (glnxa64)
+                             February 15, 2013
+
+ 
+To get started, type one of these: helpwin, helpdesk, or demo.
+For product information, visit www.mathworks.com.
+ 
+Starting matlabpool using the 'local' profile ... [Warning: Found 3 pre-existing communicating job(s) created by matlabpool that
+are running. You can use 'matlabpool close force local' to remove all jobs
+created by matlabpool.] 
+[> In InteractiveClient>InteractiveClient.pRemoveOldJobs at 426
+  In InteractiveClient>InteractiveClient.start at 260
+  In MatlabpoolHelper>MatlabpoolHelper.doOpen at 363
+  In MatlabpoolHelper>MatlabpoolHelper.doMatlabpool at 137
+  In matlabpool at 139] 
+connected to 12 workers.
+
+j =
+
+     1
+
+
+ans =
+
+    16
+
+
+ans =
+
+    22
+
+
+ans =
+
+     6
+
+
+ans =
+
+    14
+
+
+ans =
+
+    21
+
+
+ans =
+
+    10
+
+
+ans =
+
+     4
+
+
+ans =
+
+    12
+
+
+ans =
+
+    20
+
+
+ans =
+
+     8
+
+
+ans =
+
+    18
+
+
+ans =
+
+     2
+
+
+ans =
+
+    15
+
+
+ans =
+
+     9
+
+
+ans =
+
+     3
+
+
+ans =
+
+     5
+
+
+ans =
+
+    23
+
+
+ans =
+
+    19
+
+
+ans =
+
+     1
+
+
+ans =
+
+    24
+
+
+ans =
+
+    13
+
+
+ans =
+
+    11
+
+
+ans =
+
+     7
+
+
+ans =
+
+    17
+
+
+ans =
+
+    25
+
+
+ans =
+
+    26
+
+
+ans =
+
+    31
+
+
+ans =
+
+    29
+
+
+ans =
+
+    28
+
+
+ans =
+
+    27
+
+
+ans =
+
+    30
+
+
+j =
+
+     2
+
+
+ans =
+
+    16
+
+
+ans =
+
+    22
+
+
+ans =
+
+     6
+
+
+ans =
+
+    14
+
+
+ans =
+
+    21
+
+
+ans =
+
+    10
+
+
+ans =
+
+     4
+
+
+ans =
+
+    12
+
+
+ans =
+
+    20
+
+
+ans =
+
+     8
+
+
+ans =
+
+    18
+
+
+ans =
+
+     2
+
+
+ans =
+
+    17
+
+
+ans =
+
+    15
+
+
+ans =
+
+     5
+
+
+ans =
+
+    13
+
+
+ans =
+
+     9
+
+
+ans =
+
+    11
+
+
+ans =
+
+    19
+
+
+ans =
+
+    23
+
+
+ans =
+
+    24
+
+
+ans =
+
+     3
+
+
+ans =
+
+     7
+
+
+ans =
+
+     1
+
+
+ans =
+
+    25
+
+
+ans =
+
+    29
+
+
+ans =
+
+    28
+
+
+ans =
+
+    31
+
+
+ans =
+
+    27
+
+
+ans =
+
+    30
+
+
+ans =
+
+    26
+
+
+j =
+
+     3
+
+
+ans =
+
+    16
+
+
+ans =
+
+    22
+
+
+ans =
+
+     6
+
+
+ans =
+
+    14
+
+
+ans =
+
+    21
+
+
+ans =
+
+    10
+
+
+ans =
+
+     4
+
+
+ans =
+
+    12
+
+
+ans =
+
+    20
+
+
+ans =
+
+     8
+
+
+ans =
+
+    18
+
+
+ans =
+
+     2
+
+
+ans =
+
+    15
+
+
+ans =
+
+     5
+
+
+ans =
+
+    13
+
+
+ans =
+
+     9
+
+
+ans =
+
+     3
+
+
+ans =
+
+    11
+
+
+ans =
+
+     7
+
+
+ans =
+
+    17
+
+
+ans =
+
+    23
+
+
+ans =
+
+    24
+
+
+ans =
+
+    19
+
+
+ans =
+
+     1
+
+
+ans =
+
+    25
+
+
+ans =
+
+    26
+
+
+ans =
+
+    28
+
+
+ans =
+
+    30
+
+
+ans =
+
+    31
+
+
+ans =
+
+    27
+
+
+ans =
+
+    29
+
+
+j =
+
+     4
+
+
+ans =
+
+    16
+
+
+ans =
+
+    22
+
+
+ans =
+
+     6
+
+
+ans =
+
+    14
+
+
+ans =
+
+    21
+
+
+ans =
+
+    10
+
+
+ans =
+
+     4
+
+
+ans =
+
+    12
+
+
+ans =
+
+    20
+
+
+ans =
+
+     8
+
+
+ans =
+
+    18
+
+
+ans =
+
+     2
+
+
+ans =
+
+     5
+
+
+ans =
+
+    13
+
+
+ans =
+
+     9
+
+
+ans =
+
+    19
+
+
+ans =
+
+    17
+
+
+ans =
+
+    23
+
+
+ans =
+
+     7
+
+
+ans =
+
+    15
+
+
+ans =
+
+    24
+
+
+ans =
+
+     3
+
+
+ans =
+
+    11
+
+
+ans =
+
+     1
+
+
+ans =
+
+    25
+
+
+ans =
+
+    28
+
+
+ans =
+
+    26
+
+
+ans =
+
+    27
+
+
+ans =
+
+    30
+
+
+ans =
+
+    31
+
+
+ans =
+
+    29
+
+
+j =
+
+     5
+
+
+ans =
+
+    16
+
+
+ans =
+
+    22
+
+
+ans =
+
+     6
+
+
+ans =
+
+    14
+
+
+ans =
+
+    21
+
+
+ans =
+
+    10
+
+
+ans =
+
+     4
+
+
+ans =
+
+    12
+
+
+ans =
+
+    20
+
+
+ans =
+
+     8
+
+
+ans =
+
+    18
+
+
+ans =
+
+     2
+
+
+ans =
+
+     5
+
+
+ans =
+
+    13
+
+
+ans =
+
+     9
+
+
+ans =
+
+     7
+
+
+ans =
+
+    17
+
+
+ans =
+
+    23
+
+
+ans =
+
+    15
+
+
+ans =
+
+    24
+
+
+ans =
+
+     3
+
+
+ans =
+
+    11
+
+
+ans =
+
+    19
+
+
+ans =
+
+     1
+
+
+ans =
+
+    25
+
+
+ans =
+
+    30
+
+
+ans =
+
+    26
+
+
+ans =
+
+    27
+
+
+ans =
+
+    29
+
+
+ans =
+
+    31
+
+
+ans =
+
+    28
+
+
+j =
+
+     6
+
+
+ans =
+
+    16
+
+
+ans =
+
+    22
+
+
+ans =
+
+     6
+
+
+ans =
+
+    14
+
+
+ans =
+
+    21
+
+
+ans =
+
+    10
+
+
+ans =
+
+     4
+
+
+ans =
+
+    12
+
+
+ans =
+
+    20
+
+
+ans =
+
+     8
+
+
+ans =
+
+    18
+
+
+ans =
+
+     2
+
+
+ans =
+
+    13
+
+
+ans =
+
+     9
+
+
+ans =
+
+    15
+
+
+ans =
+
+    23
+
+
+ans =
+
+     5
+
+
+ans =
+
+    19
+
+
+ans =
+
+     7
+
+
+ans =
+
+    17
+
+
+ans =
+
+    11
+
+
+ans =
+
+     1
+
+
+ans =
+
+    24
+
+
+ans =
+
+     3
+
+
+ans =
+
+    25
+
+
+ans =
+
+    26
+
+
+ans =
+
+    30
+
+
+ans =
+
+    27
+
+
+ans =
+
+    28
+
+
+ans =
+
+    31
+
+
+ans =
+
+    29
+
+
+j =
+
+     7
+
+
+ans =
+
+    16
+
+
+ans =
+
+    22
+
+
+ans =
+
+     6
+
+
+ans =
+
+    14
+
+
+ans =
+
+    21
+
+
+ans =
+
+    10
+
+
+ans =
+
+     4
+
+
+ans =
+
+    12
+
+
+ans =
+
+    20
+
+
+ans =
+
+     8
+
+
+ans =
+
+    18
+
+
+ans =
+
+     2
+

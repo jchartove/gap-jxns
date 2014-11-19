@@ -1,0 +1,34 @@
+results from inhib tests:
+*gj conductance decreases firing rate
+*% input shared increases it as long as there is a gj. the more powerful the gj the more superlinear the increase but it always ends up around 5. conductance makes less of a difference as it increases
+*with 10 cell nothing really changes other than fr stays lower for longer
+*not easy to see what removing the inhibitory synapse does because the color bar changes. i guess it ups the firing rate?
+
+*%input shared increases spike pairs to pretty much max for two cells obvi. gj conductance also increases it. the combination is pretty linear
+*removing the inhibition increases pairs
+*pretty much no spike pairs with 10 cells except at 100% input shared. a little more with  increasing gj conductance. interestingly, more pairs at 0 conductance
+
+*inhib conductance very slightly decreases fr at very high conductances. hard to see an interaction with gj conductance since the latter is so much more dramatic
+*pmuch no change with 10 cells
+
+*spike pairs are maxed at low inhibition, high gj. interaction looks a little superlinear
+*gets weird and noisy at 10 cells. and what's going on at low gj conductance? bug?
+
+*pretty similar pattern wrt inhib conductance and shared input - shared input increases firing rate, inhib conductance diminishes it, pretty linear
+*pmuch the same at 10 cells. little lower firing rate
+*it gets wacky without a gap junction tho! shared input actually decreases firing rate until 100% where it suddenly increases
+
+*shared input increases spike pairs, inhib conductance decreases them. pretty linear, pretty hard to see until big inhibition. 
+*you actually get more spike pairs in the 10 cell condition than in the 2 cell one here -with 2 cells you see very few spike pairs until 100% shared
+*and with no gap junction you see hardly any until that point. same trends with inhib conductance tho
+
+summary:
+*gj conductance decreases firing rate
+*inhibitory conductance decreases firing rate (requires much higher conductances than gj)
+*% input shared increases firing rate as long as there is a gap junction
+*however, with inhibition alone, % input shared decreases firing rate unless it is 100% shared (check this out with 10 cells)
+
+*gj conductance increases spike pairs (might want to look at w/o inhib for 10 cells)
+*% input shared increases spike pairs (even without a gap junction)
+*inhibition decreases spike pairs
+*though the previous holds true, more spike pairs with no gap junction for 10 cells? might wanna do a large test for this
